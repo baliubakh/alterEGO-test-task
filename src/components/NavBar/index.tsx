@@ -214,6 +214,7 @@ const NavBarComponent = () => {
               aria-haspopup="true"
               onClick={handleOpenLngNavMenu}
               color="inherit"
+              sx={{ mr: 2 }}
             >
               <LanguageIcon />
             </IconButton>
