@@ -12,8 +12,10 @@ import { NEWS_PER_PAGE } from "../../constants";
 import { get, showNews } from "../../redux/slices/news-slice";
 import { newsService } from "../../services/newsService";
 import NewsItem from "../../common/NewsItem";
+import { useTranslation } from "react-i18next";
 
 const NewsComponent = () => {
+  const { t } = useTranslation();
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const dispatch = useDispatch();
@@ -45,7 +47,7 @@ const NewsComponent = () => {
           textDecoration: "none",
         }}
       >
-        News
+        {t("news.title")}
       </Typography>
       <Divider sx={{ my: 1 }} />
       <ImageList cols={3}>
@@ -71,7 +73,7 @@ const NewsComponent = () => {
               },
             }}
           >
-            Load More
+            {t("news.button")}
           </Button>
         )}
       </Box>

@@ -13,7 +13,7 @@ const Layout = ({ children }: ILayoutProps) => {
       <NavBarComponent />
       <Container
         sx={{
-          width: "90%",
+          width: { xs: "100%", md: "90%" },
           boxShadow: 3,
           my: 3,
           mx: "auto",

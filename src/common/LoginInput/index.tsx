@@ -7,7 +7,7 @@ interface ILoginInputProps {
   label: string;
   name: string;
   type: string;
-  error?: string;
+  error?: string | null;
   touched?: boolean;
 }
 

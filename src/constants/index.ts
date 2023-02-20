@@ -28,6 +28,18 @@ export const loginFormData = {
   buttonText: "Login",
 };
 
+export const pages = [
+  {
+    name: "News",
+    link: "/news",
+  },
+  {
+    name: "Profile",
+    link: "/profile",
+    withAuth: true,
+  },
+];
+
 export const POSTS_PER_PAGE = 20;
 
 export const NEWS_PER_PAGE = 20;

@@ -1,6 +1,7 @@
 import { Container, Box, Typography, Alert, Button } from "@mui/material";
 import { Formik, Form, FormikHelpers } from "formik";
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 import LoginInput from "../../common/LoginInput";
 import { loginFormData, loginInitialValues } from "../../constants";
@@ -8,6 +9,7 @@ import { ILoginForm } from "../../types/auth.types";
 import { LoginSchema } from "../../validators/login.validator";
 
 const LoginPage = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [isIncorrectData, setIsIncorrectData] = useState<boolean>(false);
 
@@ -27,6 +29,8 @@ const LoginPage = () => {
     }
     setIsIncorrectData(true);
   };
+
+  const inputs = t("login.inputs", { returnObjects: true });
 
   return (
     <Container
@@ -49,7 +53,7 @@ const LoginPage = () => {
         }}
       >
         <Typography sx={{ fontSize: 30, mb: "35px" }}>
-          {loginFormData.title}
+          {t("login.title")}
         </Typography>
         <Formik
           initialValues={loginInitialValues}
@@ -59,18 +63,30 @@ const LoginPage = () => {
         >
           {({ errors, touched }) => (
             <Form>
-              {loginFormData.inputs.map((input) => (
+              {Object.values(inputs).map((input, idx) => (
                 <LoginInput
-                  key={input.id}
-                  type={input.type}
-                  name={input.name}
-                  label={input.label}
-                  error={errors[input.name as keyof ILoginForm]}
-                  touched={touched[input.name as keyof ILoginForm]}
+                  key={loginFormData.inputs[idx].id}
+                  type={loginFormData.inputs[idx].type}
+                  name={loginFormData.inputs[idx].name}
+                  label={input}
+                  error={
+                    errors[loginFormData.inputs[idx].name as keyof ILoginForm]
+                      ? t(
+                          `login.errors.${
+                            errors[
+                              loginFormData.inputs[idx].name as keyof ILoginForm
+                            ]
+                          }`
+                        )
+                      : undefined
+                  }
+                  touched={
+                    touched[loginFormData.inputs[idx].name as keyof ILoginForm]
+                  }
                 />
               ))}
               {isIncorrectData && (
-                <Alert severity="error">Incorrect Username or Password</Alert>
+                <Alert severity="error">{t("login.incorrect")}</Alert>
               )}
               <Container
                 sx={{
@@ -93,7 +109,7 @@ const LoginPage = () => {
                     },
                   }}
                 >
-                  {loginFormData.buttonText}
+                  {t("login.button")}
                 </Button>
               </Container>
             </Form>

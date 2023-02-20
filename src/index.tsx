@@ -8,16 +8,21 @@ import App from "./App";
 import { CssBaseline, ThemeProvider } from "@mui/material";
 import theme from "./styles/themes";
 
+import "./i18n";
+
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );
+
 root.render(
   <React.StrictMode>
     <Provider store={store}>
-      <BrowserRouter basename="/alterEGO-test-task">
+      <BrowserRouter basename={`/alterEGO-test-task`}>
         <ThemeProvider theme={theme}>
           <CssBaseline />
-          <App />
+          <React.Suspense fallback="loading">
+            <App />
+          </React.Suspense>
         </ThemeProvider>
       </BrowserRouter>
     </Provider>

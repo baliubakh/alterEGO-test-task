@@ -12,12 +12,14 @@ import PostItem from "../../common/PostItem";
 import { POSTS_PER_PAGE } from "../../constants";
 import { get, showPosts } from "../../redux/slices/posts-slice";
 import { postsService } from "../../services/postsService";
+import { useTranslation } from "react-i18next";
 
 const HomePageComponent = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
   const [page, setPage] = useState<number>(1);
   const dispatch = useDispatch();
   const postsState = useSelector(showPosts);
+  const { t } = useTranslation();
 
   useEffect(() => {
     postsService.getPosts(page * POSTS_PER_PAGE).then((res) => {
@@ -45,7 +47,7 @@ const HomePageComponent = () => {
           textDecoration: "none",
         }}
       >
-        Posts
+        {t("home.title")}
       </Typography>
       <Divider sx={{ my: 1 }} />
       <Grid
@@ -78,7 +80,7 @@ const HomePageComponent = () => {
               },
             }}
           >
-            Load More
+            {t("home.button")}
           </Button>
         )}
       </Box>
