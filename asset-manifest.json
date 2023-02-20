@@ -1,13 +1,14 @@
 {
   "files": {
     "main.css": "/alterEGO-test-task/static/css/main.0562c16f.css",
-    "main.js": "/alterEGO-test-task/static/js/main.04541a9c.js",
+    "main.js": "/alterEGO-test-task/static/js/main.ffa7dfdf.js",
     "index.html": "/alterEGO-test-task/index.html",
+    "static/media/getFetch.cjs": "/alterEGO-test-task/static/media/getFetch.40f37ddea2378391108f.cjs",
     "main.0562c16f.css.map": "/alterEGO-test-task/static/css/main.0562c16f.css.map",
-    "main.04541a9c.js.map": "/alterEGO-test-task/static/js/main.04541a9c.js.map"
+    "main.ffa7dfdf.js.map": "/alterEGO-test-task/static/js/main.ffa7dfdf.js.map"
   },
   "entrypoints": [
     "static/css/main.0562c16f.css",
-    "static/js/main.04541a9c.js"
+    "static/js/main.ffa7dfdf.js"
   ]
 }
