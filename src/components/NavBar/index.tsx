@@ -5,13 +5,13 @@ import Toolbar from "@mui/material/Toolbar";
 import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
-import Link from "@mui/material/Link";
 import MenuIcon from "@mui/icons-material/Menu";
 import Container from "@mui/material/Container";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import ChildCareIcon from "@mui/icons-material/ChildCare";
+import { Link } from "react-router-dom";
 
 const pages = [
   {
@@ -46,7 +46,7 @@ const NavBarComponent = () => {
       <Container maxWidth="xl" sx={{ bgcolor: "secondary.main" }}>
         <Toolbar disableGutters>
           <Link
-            href="/"
+            to="/"
             style={{
               textDecoration: "none",
               color: "inherit",
@@ -106,7 +106,7 @@ const NavBarComponent = () => {
             >
               {pages.map((page) => (
                 <Link
-                  href={page.link}
+                  to={page.link}
                   key={page.name}
                   style={{ textDecoration: "none", color: "inherit" }}
                 >
@@ -126,40 +126,45 @@ const NavBarComponent = () => {
               ))}
             </Menu>
           </Box>
-          <Link
-            href="/"
+          <Box
             sx={{
               flexGrow: { xs: 1, md: 0 },
-              textDecoration: "none",
-              color: "inherit",
-              display: "flex",
-              alignItems: "center",
             }}
           >
-            <ChildCareIcon
-              sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
-            />
-            <Typography
-              variant="h5"
-              noWrap
-              sx={{
-                mr: 2,
-                display: { xs: "flex", md: "none" },
-                width: "fit-content",
-                flexGrow: 1,
-                fontFamily: "monospace",
-                fontWeight: 700,
-                letterSpacing: ".3rem",
-                color: "inherit",
+            <Link
+              to="/"
+              style={{
                 textDecoration: "none",
+                color: "inherit",
+                display: "flex",
+                alignItems: "center",
               }}
             >
-              TEST TASK
-            </Typography>
-          </Link>
+              <ChildCareIcon
+                sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
+              />
+              <Typography
+                variant="h5"
+                noWrap
+                sx={{
+                  mr: 2,
+                  display: { xs: "flex", md: "none" },
+                  width: "fit-content",
+                  flexGrow: 1,
+                  fontFamily: "monospace",
+                  fontWeight: 700,
+                  letterSpacing: ".3rem",
+                  color: "inherit",
+                  textDecoration: "none",
+                }}
+              >
+                TEST TASK
+              </Typography>
+            </Link>
+          </Box>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
             {pages.map((page) => (
-              <Link href={page.link} key={page.name}>
+              <Link to={page.link} key={page.name}>
                 <Button
                   onClick={handleCloseNavMenu}
                   sx={{ my: 2, color: "text.secondary", display: "block" }}
