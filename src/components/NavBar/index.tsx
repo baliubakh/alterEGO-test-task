@@ -6,36 +6,61 @@ import IconButton from "@mui/material/IconButton";
 import Typography from "@mui/material/Typography";
 import Menu from "@mui/material/Menu";
 import MenuIcon from "@mui/icons-material/Menu";
+import LanguageIcon from "@mui/icons-material/Language";
 import Container from "@mui/material/Container";
-import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
-import MenuItem from "@mui/material/MenuItem";
 import ChildCareIcon from "@mui/icons-material/ChildCare";
 import { Link } from "react-router-dom";
-
-const pages = [
-  {
-    name: "Profile",
-    link: "/profile",
-  },
-  {
-    name: "News",
-    link: "/news",
-  },
-];
+import { pages } from "../../constants";
+import WebNavItem from "../../common/NavBar/web/nav-item";
+import MobileNavItem from "../../common/NavBar/mobile/nav-item";
+import { useTranslation } from "react-i18next";
+import MenuItem from "@mui/material/MenuItem";
 
 const NavBarComponent = () => {
+  const { t, i18n } = useTranslation();
   const [anchorElNav, setAnchorElNav] = React.useState<null | HTMLElement>(
     null
   );
+
+  const [lngElNav, setLngElNav] = React.useState<null | HTMLElement>(null);
 
   const handleOpenNavMenu = (event: React.MouseEvent<HTMLElement>) => {
     setAnchorElNav(event.currentTarget);
   };
 
+  const handleOpenLngNavMenu = (event: React.MouseEvent<HTMLElement>) => {
+    setLngElNav(event.currentTarget);
+  };
+
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
   };
+
+  const handleCloseLngNavMenu = () => {
+    setLngElNav(null);
+  };
+
+  const username = localStorage.getItem("USERNAME");
+  const password = localStorage.getItem("PASSWORD");
+
+  const isAuthorized = !!(username && password);
+
+  const handleLogoutClick = () => {
+    if (isAuthorized) {
+      localStorage.removeItem("USERNAME");
+      localStorage.removeItem("PASSWORD");
+    }
+  };
+
+  const lngs = {
+    en: { nativeName: "English" },
+    uk: { nativeName: "Ukraine" },
+  };
+
+  const changeLanguage = (lng: string) => i18n.changeLanguage(lng);
+
+  const navLinks = t("nav", { returnObjects: true });
 
   return (
     <AppBar
@@ -70,7 +95,7 @@ const NavBarComponent = () => {
                 textDecoration: "none",
               }}
             >
-              TEST TASK
+              {t("logo")}
             </Typography>
           </Link>
           <Box sx={{ flexGrow: 1, display: { xs: "flex", md: "none" } }}>
@@ -104,26 +129,25 @@ const NavBarComponent = () => {
                 display: { xs: "block", md: "none" },
               }}
             >
-              {pages.map((page) => (
-                <Link
-                  to={page.link}
-                  key={page.name}
-                  style={{ textDecoration: "none", color: "inherit" }}
-                >
-                  <MenuItem onClick={handleCloseNavMenu}>
-                    <Typography
-                      textAlign="center"
-                      color="text.primary"
-                      sx={{
-                        height: "100%",
-                        width: "100%",
-                      }}
-                    >
-                      {page.name}
-                    </Typography>
-                  </MenuItem>
-                </Link>
-              ))}
+              {Object.values(navLinks).map((label, idx) => {
+                return (
+                  (pages[idx]?.withAuth && (
+                    <MobileNavItem
+                      key={label}
+                      link={isAuthorized ? pages[idx].link : "/login"}
+                      label={isAuthorized ? label : t("navLogin")}
+                      onClick={handleCloseNavMenu}
+                    />
+                  )) || (
+                    <MobileNavItem
+                      key={label}
+                      link={pages[idx].link}
+                      label={label}
+                      onClick={handleCloseNavMenu}
+                    />
+                  )
+                );
+              })}
             </Menu>
           </Box>
           <Box
@@ -158,23 +182,86 @@ const NavBarComponent = () => {
                   textDecoration: "none",
                 }}
               >
-                TEST TASK
+                {t("logo")}
               </Typography>
             </Link>
           </Box>
           <Box sx={{ flexGrow: 1, display: { xs: "none", md: "flex" } }}>
-            {pages.map((page) => (
-              <Link to={page.link} key={page.name}>
-                <Button
-                  onClick={handleCloseNavMenu}
-                  sx={{ my: 2, color: "text.secondary", display: "block" }}
-                >
-                  {page.name}
-                </Button>
-              </Link>
-            ))}
+            {Object.values(navLinks).map(
+              (label, idx) =>
+                (pages[idx]?.withAuth && (
+                  <WebNavItem
+                    key={label}
+                    link={(isAuthorized && pages[idx].link) || "/login"}
+                    label={(isAuthorized && label) || t("navLogin")}
+                    onClick={handleCloseNavMenu}
+                  />
+                )) || (
+                  <WebNavItem
+                    key={label}
+                    link={pages[idx].link}
+                    label={label}
+                    onClick={handleCloseNavMenu}
+                  />
+                )
+            )}
           </Box>
-          <Box sx={{ flexGrow: 0 }}>test</Box>
+          <Tooltip title="Change Language">
+            <IconButton
+              size="large"
+              aria-label="account of current user"
+              aria-controls="menu-lngs"
+              aria-haspopup="true"
+              onClick={handleOpenLngNavMenu}
+              color="inherit"
+            >
+              <LanguageIcon />
+            </IconButton>
+          </Tooltip>
+          <Menu
+            id="menu-lngs"
+            anchorEl={lngElNav}
+            anchorOrigin={{
+              vertical: "bottom",
+              horizontal: "right",
+            }}
+            keepMounted
+            transformOrigin={{
+              vertical: "top",
+              horizontal: "right",
+            }}
+            open={Boolean(lngElNav)}
+            onClose={handleCloseLngNavMenu}
+          >
+            {Object.entries(lngs).map((lng) => (
+              <Box
+                key={lng[0]}
+                component="div"
+                onClick={() => changeLanguage(lng[0])}
+              >
+                <MenuItem
+                  style={{
+                    fontWeight:
+                      i18n.resolvedLanguage === lng[0] ? "bold" : "normal",
+                    color: "inherit",
+                  }}
+                >
+                  {lng[1].nativeName}
+                </MenuItem>
+              </Box>
+            ))}
+          </Menu>
+          <Box sx={{ flexGrow: 0 }}>
+            {isAuthorized && (
+              <Link
+                onClick={handleLogoutClick}
+                style={{ color: "inherit" }}
+                to="/"
+              >
+                {t("logout")}
+              </Link>
+            )}
+          </Box>
         </Toolbar>
       </Container>
     </AppBar>

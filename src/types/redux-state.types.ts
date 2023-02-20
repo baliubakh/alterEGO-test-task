@@ -20,3 +20,14 @@ export interface IPost {
 export interface IPostsState {
   posts: IPost[];
 }
+
+export interface ITodo {
+  userId: number;
+  id: number;
+  title: string;
+  completed: boolean;
+}
+
+export interface ITodosState {
+  todos: ITodo[];
+}

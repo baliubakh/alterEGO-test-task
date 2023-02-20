@@ -1,0 +1,41 @@
+{
+  "logo": "TEST TASK",
+  "nav": {
+    "news": "News",
+    "profile": "Profile"
+  },
+  "navLogin": "Login",
+  "logout": "Log out",
+  "home": {
+    "title": "Posts",
+    "button": "Load More"
+  },
+  "news": {
+    "title": "News",
+    "button": "Load More"
+  },
+  "login": {
+    "title": "Login",
+    "inputs": {
+      "username": "Username",
+      "password": "Password"
+    },
+    "button": "LOGIN",
+    "errors": {
+      "username": {
+        "short": "Too Short!",
+        "long": "Too Long!",
+        "required": "Required"
+      },
+      "password": {
+        "short": "Too Short!",
+        "long": "Too Long!",
+        "required": "Required"
+      }
+    },
+    "incorrect": "Incorrect Username or Password"
+  },
+  "profile": {
+    "title": "Hello {{name}}!"
+  }
+}
